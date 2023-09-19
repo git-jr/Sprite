@@ -8,16 +8,21 @@
     tools:context=".TabFragment1">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/container_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
         <com.paradoxo.sprite.ImageCardView
+            android:id="@+id/image_custom_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cor_titulo="@android:color/holo_orange_light"
             app:imagem="@drawable/luffy"
-            app:titulo="@string/app_name" />
+            app:titulo="@string/bounce" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

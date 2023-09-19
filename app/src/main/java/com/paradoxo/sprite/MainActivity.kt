@@ -1,8 +1,6 @@
 package com.paradoxo.sprite
 
-import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
 import com.paradoxo.sprite.databinding.ActivityMainBinding
@@ -53,9 +51,4 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-}
-
-
-fun Context.showMessage(msg: String) {
-    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }

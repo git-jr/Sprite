@@ -1,10 +1,12 @@
 package com.paradoxo.sprite
 
+import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.animation.BounceInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.card.MaterialCardView
 import com.paradoxo.sprite.databinding.ImageCardViewBinding
 
 class ImageCardView @JvmOverloads constructor(
@@ -13,10 +15,8 @@ class ImageCardView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var title: String? = null
-    private var image: Drawable? = null
 
-    private lateinit var binding: ImageCardViewBinding
+    private var binding: ImageCardViewBinding
 
     init {
         binding = ImageCardViewBinding.inflate(LayoutInflater.from(context), this, true)
@@ -54,4 +54,21 @@ class ImageCardView @JvmOverloads constructor(
     }
 
 
+    fun animateRoundCorner() {
+
+        val cardView: MaterialCardView = binding.cardImageView
+
+        val currentRadius = cardView.radius
+        val targetRadius = if (currentRadius > 25f) 25f else 150f
+
+        val animation = ValueAnimator.ofFloat(currentRadius, targetRadius)
+        animation.duration = 1000
+        animation.interpolator = BounceInterpolator()
+
+        animation.addUpdateListener {
+            cardView.radius = it.animatedValue as Float
+        }
+
+        animation.start()
+    }
 }
