@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0F0F44"
-    tools:context=".TabFragment1">
+    tools:context=".home.fragments.TabFragment1">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/container_card"

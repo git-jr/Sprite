@@ -1,9 +1,12 @@
-package com.paradoxo.sprite
+package com.paradoxo.sprite.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
+import com.paradoxo.sprite.R
 import com.paradoxo.sprite.databinding.ActivityMainBinding
+import com.paradoxo.sprite.home.fragments.TabFragment1
+import com.paradoxo.sprite.home.fragments.TabFragment2
 
 class MainActivity : AppCompatActivity() {
 

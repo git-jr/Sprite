@@ -1,4 +1,4 @@
-package com.paradoxo.sprite
+package com.paradoxo.sprite.home
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,10 +19,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -33,6 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.paradoxo.sprite.R
 import com.paradoxo.sprite.ui.theme.SpriteTheme
 
 class ComposeMainActivity : ComponentActivity() {
@@ -44,7 +44,8 @@ class ComposeMainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppScreen()
+                    val viewModel: HomeViewModel = viewModel()
+                    AppScreen(viewModel)
                 }
             }
         }
@@ -52,13 +53,14 @@ class ComposeMainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppScreen() {
-    var moveCard by remember { mutableStateOf(true) }
+fun AppScreen(viewModel: HomeViewModel) {
+
+    val state by viewModel.uiState.collectAsState()
 
     val heightDp = LocalConfiguration.current.screenHeightDp
 
     val animatedOffset by animateDpAsState(
-        targetValue = if (moveCard) 0.dp else (heightDp / 2).dp,
+        targetValue = if (state.moveCard) 0.dp else (heightDp / 2).dp,
         label = ""
     )
 
@@ -67,7 +69,7 @@ fun AppScreen() {
             .fillMaxSize()
             .background(Color(15, 15, 68))
             .clickable {
-                moveCard = !moveCard
+                viewModel.changeMoveCard()
             }
     ) {
         Box(modifier = Modifier.offset(y = animatedOffset)) {
@@ -75,9 +77,12 @@ fun AppScreen() {
                 image = R.drawable.luffy,
                 text = stringResource(id = R.string.bounce),
                 textColor = R.color.purple_200,
+                state.changeCorner,
+                onChangeCorner = {
+                    viewModel.changeCorner()
+                }
             )
         }
-
     }
 }
 
@@ -85,9 +90,10 @@ fun AppScreen() {
 fun CardScreenImageView(
     image: Int,
     text: String,
-    textColor: Int
+    textColor: Int,
+    changeCorner: Boolean,
+    onChangeCorner: () -> Unit = {}
 ) {
-    var changeCorner by remember { mutableStateOf(true) }
 
     val cornerAnimation by animateDpAsState(
         targetValue = if (changeCorner) 50.dp else 10.dp,
@@ -100,7 +106,7 @@ fun CardScreenImageView(
         ElevatedCard(
             shape = RoundedCornerShape(cornerAnimation),
             modifier = Modifier.clickable {
-                changeCorner = !changeCorner
+                onChangeCorner()
             }
         ) {
             Image(
@@ -124,5 +130,5 @@ fun CardScreenImageView(
 @Preview(showSystemUi = true)
 @Composable
 fun AppScreenPreview() {
-    AppScreen()
+//    AppScreen(viewModel)
 }

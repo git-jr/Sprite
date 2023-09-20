@@ -1,15 +1,13 @@
-package com.paradoxo.sprite
+package com.paradoxo.sprite.home.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import androidx.fragment.app.Fragment
+import com.paradoxo.sprite.databinding.FragmentTab2Binding
+import com.paradoxo.sprite.home.ComposeMainActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -32,9 +30,14 @@ class TabFragment2 : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab2, container, false)
+    ): View {
+        val binding = FragmentTab2Binding.inflate(layoutInflater)
+
+        binding.textViewFrag2.setOnClickListener {
+            startActivity(Intent(context, ComposeMainActivity::class.java))
+        }
+
+        return binding.root
     }
 
     companion object {
@@ -57,3 +60,6 @@ class TabFragment2 : Fragment() {
             }
     }
 }
+
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"

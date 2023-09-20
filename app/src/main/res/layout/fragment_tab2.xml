@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".TabFragment2">
+    tools:context=".home.fragments.TabFragment2">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView_frag2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
