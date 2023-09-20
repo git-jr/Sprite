@@ -1,16 +1,21 @@
 package com.paradoxo.sprite.home
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.paradoxo.sprite.R
 import com.paradoxo.sprite.databinding.ActivityMainBinding
 import com.paradoxo.sprite.home.fragments.TabFragment1
 import com.paradoxo.sprite.home.fragments.TabFragment2
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     private val fragment1 = TabFragment1()
     private val fragment2 = TabFragment2()
@@ -19,6 +24,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        lifecycleScope.launch {
+            homeViewModel.uiState.collect {
+            }
+        }
 
         supportFragmentManager.beginTransaction().apply {
             replace(binding.mainFragment.id, fragment1)

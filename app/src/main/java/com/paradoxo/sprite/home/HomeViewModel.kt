@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel() : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeState())
     var uiState = _uiState.asStateFlow()

@@ -94,7 +94,6 @@ fun CardScreenImageView(
     changeCorner: Boolean,
     onChangeCorner: () -> Unit = {}
 ) {
-
     val cornerAnimation by animateDpAsState(
         targetValue = if (changeCorner) 50.dp else 10.dp,
         label = ""

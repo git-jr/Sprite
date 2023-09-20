@@ -7,21 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.paradoxo.sprite.databinding.FragmentTab1Binding
+import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TabFragment1.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TabFragment1 : Fragment() {
 
     private lateinit var binding: FragmentTab1Binding
 
+    private lateinit var viewModel: TabFragment1ViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,19 +25,26 @@ class TabFragment1 : Fragment() {
     ): View {
 
         binding = FragmentTab1Binding.inflate(layoutInflater)
-
         val imageCustomCardView = binding.imageCustomCardView
+        val containerCard = binding.containerCard
+
+        viewModel = ViewModelProvider(this)[TabFragment1ViewModel::class.java]
+        val state = viewModel.uiState
+        lifecycleScope.launch {
+            state.collect {
+
+            }
+        }
 
         imageCustomCardView.setOnClickListener {
             binding.imageCustomCardView.animateRoundCorner()
         }
 
 
-        val containerCard = binding.containerCard
         containerCard.setOnClickListener {
-            val currentHeight = binding.root.height / 2
             val currentPosition = imageCustomCardView.translationY
-            val targetPosition = if (currentPosition == 0f) currentHeight.toFloat() else 0f
+            val targetPosition =
+                if (currentPosition == 0f) state.value.heighScreen.toFloat() else 0f
 
             val animator = ValueAnimator.ofFloat(currentPosition, targetPosition)
             animator.interpolator = AccelerateInterpolator()
@@ -58,17 +61,6 @@ class TabFragment1 : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TabFragment1().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = TabFragment1()
     }
 }
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
