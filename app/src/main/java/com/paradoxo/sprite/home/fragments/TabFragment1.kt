@@ -42,6 +42,7 @@ class TabFragment1 : Fragment() {
 
 
         containerCard.setOnClickListener {
+            viewModel.setHeightScreen(binding.root.height)
             val currentPosition = imageCustomCardView.translationY
             val targetPosition =
                 if (currentPosition == 0f) state.value.heighScreen.toFloat() else 0f
